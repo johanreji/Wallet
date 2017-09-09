@@ -27,26 +27,25 @@ public class MainActivity extends AppCompatActivity {
     private Intent i=null;
 
     DatabaseHelper myDb;
- //   ImageView imageView=null;
+
 private FloatingActionButton fab=null;
    private ListView listView=null;
 
- //   Bitmap bmp=null;
 private ArrayList<String> thelist=null;
     private ListAdapter listAdapter=null;
 
- //   private TextView name=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDb=new DatabaseHelper(this);
         thelist=new ArrayList<>();
-//imageView=(ImageView)findViewById(R.id.imageView);
+
         fab = (FloatingActionButton)findViewById(R.id.fab);
         intent= new Intent(MainActivity.this,CreateCard.class);
         i=new Intent(MainActivity.this,Displaycard.class);
-      //  name=(TextView)findViewById(R.id.name);
+
         listView=(ListView)findViewById(R.id.listview);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,44 +73,38 @@ private ArrayList<String> thelist=null;
         if(res.getCount()==0)
         {
              Toast.makeText(this,"Nothing to show",Toast.LENGTH_SHORT).show();
-       //     name.setText("nothing to show");
+
             return ;
         }
         thelist.clear();
-        //StringBuffer buffer=new StringBuffer();
+
         while(res.moveToNext()){
 
             thelist.add(res.getString(1));
 
 
 
-           // buffer.append("ID:"+res.getString(0)+"\n");
-         //   buffer.append("Name:"+res.getString(1)+"\n\n\n");
-          //  byte[] image = res.getBlob(2);
-          ///bmp=getImage(image);
+
 
         }
         listAdapter=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,thelist);
 
         listView.setAdapter(listAdapter);
-       // name.setText(buffer);
-       // imageView.setImageBitmap(bmp);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 //String value = (String)parent.getItemAtPosition(position);
+
 
                  i.putExtra("chosen",position);
                 startActivity(i);
-             //   Toast.makeText(MainActivity.this,value,Toast.LENGTH_SHORT).show();
+
             }
         });
 
     }
 
-//    public static Bitmap getImage(byte[] image) {
-//        return BitmapFactory.decodeByteArray(image, 0, image.length);
-//    }
+
 
 }
