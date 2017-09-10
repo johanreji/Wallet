@@ -49,6 +49,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
     }
 
+    public void removeData(int p)
+    {
+        SQLiteDatabase db=DatabaseHelper.this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+p+"'");
+       
+
+
+
+    }
+
     public Cursor getAllData()
     {
         SQLiteDatabase db=DatabaseHelper.this.getWritableDatabase();
