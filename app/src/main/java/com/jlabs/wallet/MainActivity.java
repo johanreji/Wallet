@@ -2,12 +2,15 @@ package com.jlabs.wallet;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.ActionMode;
@@ -32,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Intent intent=null;
     private Intent i=null;
-public int pos;
-    DatabaseHelper myDb;
+ public int pos=0;
+    public DatabaseHelper myDb;
 
 private FloatingActionButton fab=null;
    private ListView listView=null;
@@ -93,8 +96,12 @@ checkBox=(CheckBox)findViewById(R.id.checkbox);
         thelist.clear();
 
         while(res.moveToNext()){
+           // thelist.add(res);
+         //   thelist.add(res.getString(0));
 
             thelist.add(res.getString(1));
+
+
 
 
 
@@ -107,10 +114,35 @@ checkBox=(CheckBox)findViewById(R.id.checkbox);
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    pos=i+1;
 
-                    actionMode=MainActivity.this.startSupportActionMode(new ActionBarCallback());
+                    Toast.makeText(MainActivity.this,"", Toast.LENGTH_SHORT).show();
 
-pos=i;
+                  //  AlertDialog.Builder builder;
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+//                    } else {
+                  //      builder = new AlertDialog.Builder(MainActivity.this);
+//                    }
+                //    builder
+//                            .setMessage("Are you sure you want to delete this entry?")
+//                            .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // continue with delete
+//
+//                                    myDb.removeData(pos);
+//
+//                                }
+//                            })
+//                            .setNegativeButton("no", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    // do nothing
+//                                }
+//                            })
+//                            .setCancelable(true)
+//                            .show();
+
+
 
 
                     return  true;
@@ -121,7 +153,7 @@ pos=i;
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
+//myDb.removeData(position);
                  i.putExtra("chosen",position);
                 startActivity(i);
 
@@ -132,33 +164,3 @@ pos=i;
 
 
 }
- class ActionBarCallback extends MainActivity implements ActionMode.Callback{
-
-
-
-     @Override
-     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-
-
-         actionMode.getMenuInflater().inflate(R.menu.cmenu,menu);
-         return true;
-     }
-
-     @Override
-     public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-         actionMode.setTitle("");
-         return false;
-     }
-
-     @Override
-     public boolean onActionItemClicked(ActionMode actionMode, MenuItem item) {
-
-myDb.removeData(pos);
-         return true;
-     }
-
-     @Override
-     public void onDestroyActionMode(ActionMode mode) {
-
-     }
- }

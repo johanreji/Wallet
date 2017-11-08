@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 /**
  * Created by johan on 1/7/17.
@@ -51,13 +52,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void removeData(int p)
     {
+        //Toast.makeText(DatabaseHelper.this,"ooo",Toast.LENGTH_LONG).show();
         SQLiteDatabase db=DatabaseHelper.this.getWritableDatabase();
+        //db.delete("CO")
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+p+"'");
+        db.execSQL("VACUUM");
        
 
 
 
     }
+
+
+
+
 
     public Cursor getAllData()
     {
